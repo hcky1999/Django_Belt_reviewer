@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Add book and review</title>
+</head>
+<body>
+    <h1>{{user.first_name}} add a new book title and a  review</h1>
+    <form action='/addBook' method='post'>
+        {% csrf_token %}
+    Book title:<input type="text" name="name"><br>
+    Author: <input type="text" name="author"><br>
+    Review:<input type="text" name="content"><br>
+    Rating:
+    <select name='stars'>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    stars.
+    <input type='submit' value='Add Book and Review'/>
+    </form>
+</div>
+
+</body>
+</html>

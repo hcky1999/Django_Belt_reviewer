@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <title>Books Home</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" styles="display=inline">
+            <a class="navbar-brand">Welcome {{user.first_name}}!</a>
+            <div>
+                <a href="/add" type="button" class="btn btn-link">Add book and review</a>
+                <a href="/logout" type="button" class="btn btn-link">Logout</a>
+            </div>
+        </nav>
+        <div>
+            <h2>Recent book reviews:</h2>
+            <div class="list-group">
+                {% for review in newest %}
+                <div class="list-group-item list-group-item-action flex-column align-items-start" >
+                    <div class="d-flex w-100 justify-content-between" class="w-50 p-3">
+                        <h5 class="mb-1">Title: <a href="/title/{{review.book_obj.id}}">{{review.book_obj.name}}</a></h5>
+                        <small class="text-muted">Posted on {{review.created_at}}</small>                    
+                    </div>
+                    <h5 class="mb-1">Rating: {{review.rating}} starts</h5>
+                    <p class="mb-1">{{review.reviewer.first_name}} says: {{review.content}}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div>
+            <h2>Other Books with reviews:</h2>
+            <div class="list-group">
+                {% for reviews in the_rest %}
+                    <h5 class="mb-1">Title: {{reviews.book_obj.name}}</h5>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

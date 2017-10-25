@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>User reviews</title>
+</head>
+<body>
+    <div>
+        <a href="/add" type="button" class="btn btn-link">Add book and review</a>
+        <a href="/" type="button" class="btn btn-link">Logout</a></a>
+        <a href="/success" type="button" class="btn btn-link">Home</a>
+    </div>
+    <div>
+        <h1>User Alias: {{user.first_name}}</h1>
+        <h2>Name: {{user.first_name}} {{user.last_name}}</h2>
+        <h2>Email: {{user.email}}</h2>
+        <h2>Total reviews: {{countReviews}}</h2>
+    </div>
+    <div>
+        <h2>Posted reviews on the following books:</h2>
+        {% for rev in reviewedBooks %}
+        <h3>{{rev.book_obj.name}}</h3>
+        {% endfor %}
+    </div>
+</body>
+</html>
