@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'reviews/style.css' %}" media="screen" title="no title"  charset="utf-8">
     <title>User reviews</title>
 </head>
 <body>
     <div>
         <a href="/add" type="button" class="btn btn-link">Add book and review</a>
-        <a href="/" type="button" class="btn btn-link">Logout</a></a>
+        <a href="/logout" type="button" class="btn btn-link">Logout</a></a>
         <a href="/success" type="button" class="btn btn-link">Home</a>
     </div>
     <div>

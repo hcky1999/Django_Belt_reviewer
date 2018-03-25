@@ -1,0 +1,38 @@
+body{
+    /* background-image: url('t.jpg'); */
+    /* background-repeat: no-repeat; */
+    /* width: 300px; */
+    /* background-color: gray; */
+    background-image: url('t.jpg');
+    width: 900px;
+    /* height: 678px; */
+    margin: 10px;
+    padding: 10px;
+}
+
+#tlo{
+    background-image: url('t.jpg');
+    width: 900px;
+    height: 678px;
+    margin: 10px;
+}
+
+#review{
+    background-color: rgba(255, 255, 255, 0.78)  ;
+    /* opacity: 0.5; */
+}
+
+.smalcont{
+    display: inline;
+}
+
+.right{
+    position: absolute;
+    right: 10px;
+}
+
+#bookreview{
+    background-color: rgba(255, 255, 255, 0.46);
+    padding: 10px;
+    border: 1px solid saddlebrown;
+}

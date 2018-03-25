@@ -6,6 +6,23 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 NAME_REGEX = re.compile(r'^[^\W_]+(-[^\W_]+)?$', re.U)
 
 class UserManager(models.Manager):
+    def review_validator(self, postData):
+        errors=[]
+        if len(postData['addreview']) < 1:
+            errors.append("Review content cannot be empty")
+        if errors:
+            return errors
+        # else:
+        #     user = self.filter(email=postData['email'])[0]
+        #     # create new review
+        #     new_review = self.create(
+        #         content=postData['addreview'],
+        #         rating=postData['starts'],
+        #         reviewer=user,
+        #         book_obj=postData['bookid']
+        #     )
+        #     return new_review
+
     def login_validator(self, postData):
         errors = []
         if len(self.filter(email=postData['email'])) > 0:
@@ -19,7 +36,7 @@ class UserManager(models.Manager):
             return errors
         return user
 
-    def register_validator(self,postData):
+    def register_validator(self, postData):
         errors = []
         # check name and last name length
         if len(postData['first_name']) < 2 or len(postData['last_name']) < 2:
@@ -77,7 +94,7 @@ class Review(models.Model):
     content = models.TextField()
     rating = models.IntegerField()
     reviewer = models.ForeignKey(User, related_name='reviews')
-    book_obj = models.ForeignKey(Book, related_name="book_reviews", blank=True, null=True)
+    book_obj = models.ForeignKey(Book, related_name="book_reviews")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     def __repr__(self):

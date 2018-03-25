@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'reviews/style.css' %}" media="screen" title="no title"  charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <title>Book page</title>
 </head>
 <body>
-    <div>
+    <div class="container">
+    <div class="navbar navbar-expand-lg navbar-light bg-light">
         <a href="/success" type="button" class="btn btn-link">Home</a>
-        <button href="/" type="button" class="btn btn-link">Logout</a></button>
+        <button href="/logout" type="button" class="btn btn-link">Logout</a></button>
     </div>
     <h1>Title: {{book.name}}</h1>
     <h2>Author: {{book.author}}</h2>
-    <h2>Reviews:</h2>
+    <h2>Recent reviews</h2>
+    <div class="list-group-item list-group-item-action flex-column align-items-start mb-1" id="review">
     {% for review in all_reviews %}
-        <div class="list-group" >
-            <a href="" class="list-group-item list-group-item-action flex-column align-items-start" >
-                <h5 class="mb-1">Rating: {{review.rating}}</h5>
-                <p class="mb-1"><a href="/users/{{user.id}}">{{review.reviewer.first_name}}</a> says: {{review.content}}</p>
+        <div class="list-group" id="bookreview">
+            
+                <h4 class="mb-1">Rating: {{review.rating}}</h4>
+                <p><a href="/users/{{user.id}}">{{review.reviewer.first_name}}</a> says: {{review.content}}</p>
                 <small class="text-muted">Posted on {{review.created_at}}</small>
                 {% if request.session.user_id == review.reviewer.id %}
                     <a href="/destroy/{{review.id}}">Delete this review</a>
                 {% endif %}
         </div>
     {% endfor %}
+    </div>
     <div>
         <h2>Add review:</h2>
+        <div id="bookreview" class="list-group-item list-group-item-action flex-column align-items-start mb-1">
         <form action='/addReview' method='post'>
             {% csrf_token %}
+            <input type="hidden" name="bookid" value="{{book.id}}">
             <input type="text" name="addreview">
             Rating:
             <select name='stars'>
@@ -38,6 +46,15 @@
             stars.
             <input type='submit' value='Submit Review'/>
         </form>
+        <div class=red>
+            {% if messages %}
+                {% for message in messages %}
+                <h1>{{message}}</h1>
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
+    </div>
+</div>
 </body>
 </html>

@@ -37,9 +37,8 @@ def success(request):
     user = User.objects.get(id=request.session['user_id'])
     context = {
         'user': user,
-        # 'reviewList': Review.objects.filter(reviewer = user)
         'newest': Review.objects.order_by('created_at').reverse()[:3],
-        'the_rest': Review.objects.order_by('created_at').reverse()
+        'the_rest': Review.objects.order_by('created_at').reverse()[3:]
     }
     return render(request, "reviews/welcome.html", context)
 
@@ -52,10 +51,10 @@ def add(request):
     return render(request, "reviews/add.html", context)
 
 
-def addBook(request, book_id):
+def addBook(request):
     print request.session['user_id']
     user = User.objects.get(id=request.session['user_id'])
-    getbook = Book.objects.get(id=book_id)
+    # getbook = Book.objects.get(id=book_id)
     book = Book.objects.create(
         name = request.POST['name'],
         author = request.POST['author'],
@@ -67,28 +66,33 @@ def addBook(request, book_id):
         reviewer = user,
         book_obj = book
     )
-    context = {
-        "user" : user,
-        "bookCreated" : book,
-        "reviewCreated" : review,
-        "linkedBook": getbook
-    }
+    # context = {
+    #     "user" : user,
+    #     "bookCreated" : book,
+    #     "reviewCreated" : review,
+    #     "linkedBook": getbook
+    # }
     url = "/title/" + str(book.id)
+    # return redirect(request, url)
     return redirect(url)
     # return render(request, "reviews/book.html", context)
 
 
 def addReview(request):
+    book = Book.objects.get(id=request.POST['bookid'])
     user = User.objects.get(id=request.session['user_id'])
     review = Review.objects.create(
         content = request.POST['addreview'],
         rating = request.POST['stars'],
         reviewer = user,
+        book_obj = book
     )
-    context = {
-        "reviewCreated" : review
-    }
-    return render("reviews/book.html", context)
+    # context = {
+    #     "reviewCreated" : review
+    # }
+    # return render("reviews/book.html", context)
+    url = "/title/" + str(book.id)
+    return redirect(url)
 
 
 
@@ -117,9 +121,10 @@ def userpage(request, id):
 
 def destroy(request, review_id):
     review = Review.objects.get(id=review_id)
+    goback = '/title/' + str(review.book_obj.id)
     if request.session['user_id'] == review.reviewer.id:
         review.delete()
-    return render(request, "reviews/book.html")
+    return redirect(goback)
 
 
 def logout(request):
